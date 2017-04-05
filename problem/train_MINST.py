@@ -4,7 +4,7 @@ from keras.models import Model
 
 
 def train_model_s(s, data):
-    activation = s[5]
+    activation = ['sigmoid', 'tanh', 'relu', 'softmax'][s[5]]
     n_couches = s[0]
     noeuds = s[1]
     lr = s[2]
@@ -19,21 +19,12 @@ def train_model_s(s, data):
                        data)
 
 
-def train_model(activation,
-                n_couches,
-                noeuds,
-                learning_rate,
-                reg_l1,
-                reg_l2,
-                moment,
-                decay,
-                nesterov,
-                data):
+def train_model(activation, n_couches, noeuds, learning_rate, reg_l1, reg_l2,
+                moment, decay, nesterov, data):
     ((x_train, y_train), (x_valid, y_valid), (x, y)) = data
     dim = x_train.shape[1]
     network = Input(shape=(dim,))
     input = network
-    activation = ['sigmoid', 'tanh', 'relu', 'softmax'][activation]
 
     for i in range(n_couches):
         network = Dense(noeuds[i], activation=activation)(network)

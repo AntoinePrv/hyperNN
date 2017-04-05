@@ -41,8 +41,3 @@ def load_data_bis():
         "X_test":  X_test,
         "Y_test":  to_one_hot(Y_test),
     }
-
-
-if __name__ == "__main__":
-    X = load_data_bis()
-    print(X)
