@@ -60,7 +60,7 @@ def sample_sol():
     return r
 
 def learn_hyperparam():
-    data = load_data()
+    data = load_data.load_data()
     x = None
     y = None
     # initialisation
@@ -103,3 +103,7 @@ def learn_hyperparam():
                 (loss, RSM_model) = learn_RSM(x, y)
                 print('RSM_loss', loss)
                 k = k + 1
+
+
+if __name__=='__main__':
+    learn_hyperparam()
