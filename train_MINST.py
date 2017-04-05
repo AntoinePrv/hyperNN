@@ -1,20 +1,27 @@
 from keras.layers import Input, Dense
 import keras.optimizers
 from keras.models import Model
+from keras import regularizers
 
 
 def train_model_s(s, data):
-    activation = s[5]
+    activation = s[8]
     n_couches = s[0]
     noeuds = s[1]
-    lr = s[2]
-    moment = s[3]
-    nesterov = s[4]
+    learning_rate = s[2]
+    reg_l1= s[3]
+    reg_l2= s[4]
+    moment = s[5]
+    decay = s[6]
+    nesterov = s[7]
     return train_model(activation,
                        n_couches,
                        noeuds,
-                       lr,
+                       learning_rate,
+                       reg_l1,
+                       reg_l2,
                        moment,
+                       decay,
                        nesterov,
                        data)
 
@@ -36,18 +43,18 @@ def train_model(activation,
     activation = ['sigmoid', 'tanh', 'relu', 'softmax'][activation]
 
     for i in range(n_couches):
-        network = Dense(noeuds[i], activation=activation)(network)
+        network = Dense(noeuds[i], activation=activation,W_regularizer=regularizers.l1l2(reg_l1,reg_l2))(network)
 
-    network = Dense(10, activation="softmax")(network)
+    network = Dense(10, activation="softmax",W_regularizer=regularizers.l1l2(reg_l1,reg_l2))(network)
 
     model = Model(input=input, output=network)
 
     opt = keras.optimizers.SGD(lr=learning_rate,
                                momentum=moment,
-                               decay=0.0,
+                               decay=decay,
                                nesterov=nesterov)
 
-    model.compile(optimizer=opt, loss="categorical_crossentropy")
+    model.compile(optimizer=opt, loss="categorical_crossentropy", metrics=['accuracy'])
 
     model.fit(x_train, y_train,
               nb_epoch=2,
@@ -58,4 +65,4 @@ def train_model(activation,
 
     loss = model.evaluate(x_valid, y_valid, verbose=0)
     print('MINST_loss', loss)
-    return (loss, model)
+    return (loss[1], model)
