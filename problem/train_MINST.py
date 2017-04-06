@@ -28,7 +28,12 @@ def train_model_s(s, data):
 
 def train_model(activation, n_couches, noeuds, learning_rate, reg_l1, reg_l2,
                 moment, decay, nesterov, data):
-    ((x_train, y_train), (x_valid, y_valid), (x, y)) = data
+    x_train = data['X_train']
+    y_train = data['Y_train']
+    x_valid = data['X_valid']
+    y_valid = data['Y_valid']
+
+    # ((x_train, y_train), (x_valid, y_valid), (x, y)) = data
     dim = x_train.shape[1]
     network = Input(shape=(dim,))
     input = network
@@ -48,8 +53,8 @@ def train_model(activation, n_couches, noeuds, learning_rate, reg_l1, reg_l2,
     model.compile(optimizer=opt, loss="categorical_crossentropy", metrics=['accuracy'])
 
     model.fit(x_train, y_train,
-              nb_epoch=2,
-              batch_size=1280,
+              nb_epoch=20,
+              batch_size=2000,
               verbose=0,
               shuffle=True,
               validation_data=(x_valid, y_valid))

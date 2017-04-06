@@ -19,7 +19,14 @@ def load_data():
             train_set, valid_set, test_set = pickle.load(f, encoding='latin1')
         except Exception:
             train_set, valid_set, test_set = pickle.load(f)
-    return (train_set[0],to_one_hot(train_set[1])), (valid_set[0],to_one_hot(valid_set[1])),(test_set[0],to_one_hot(test_set[1])),
+    return {
+        "X_train": train_set[0],
+        "Y_train": to_one_hot(train_set[1]),
+        "X_valid": valid_set[0],
+        "Y_valid": to_one_hot(valid_set[1]),
+        "X_test": test_set[0],
+        "Y_test": to_one_hot(test_set[1]),
+    }
 
 
 def load_data_bis():
