@@ -24,8 +24,8 @@ def load_data():
         "Y_train": to_one_hot(train_set[1]),
         "X_valid": valid_set[0],
         "Y_valid": to_one_hot(valid_set[1]),
-        "X_test": test_set[0],
-        "Y_test": to_one_hot(test_set[1]),
+        "X_test":  test_set[0],
+        "Y_test":  to_one_hot(test_set[1])
     }
 
 
@@ -37,8 +37,10 @@ def load_data_bis():
     mnist = fetch_mldata('MNIST original', data_home="MNIST")
     X = mnist.data.astype(np.float32)
     Y = mnist.target.astype(np.int32)
-    X, X_test, Y, Y_test = train_test_split(X, Y, test_size=10000, random_state=78)
-    Xt, Xv, Yt, Yv = train_test_split(X, Y, test_size=10000, random_state=90)
+    X, X_test, Y, Y_test = train_test_split(X, Y, test_size=10000,
+                                            random_state=78)
+    Xt, Xv, Yt, Yv = train_test_split(X, Y, test_size=10000,
+                                      random_state=90)
 
     return {
         "X_train": Xt,

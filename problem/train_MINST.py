@@ -9,8 +9,8 @@ def train_model_s(s, data):
     n_couches = s[0]
     noeuds = s[1]
     learning_rate = s[2]
-    reg_l1= s[3]
-    reg_l2= s[4]
+    reg_l1 = s[3]
+    reg_l2 = s[4]
     moment = s[5]
     decay = s[6]
     nesterov = s[7]
@@ -28,20 +28,25 @@ def train_model_s(s, data):
 
 def train_model(activation, n_couches, noeuds, learning_rate, reg_l1, reg_l2,
                 moment, decay, nesterov, data):
-    x_train = data['X_train']
-    y_train = data['Y_train']
-    x_valid = data['X_valid']
-    y_valid = data['Y_valid']
 
-    # ((x_train, y_train), (x_valid, y_valid), (x, y)) = data
+    x_train = data["X_train"]
+    y_train = data["Y_train"]
+    x_valid = data["X_valid"]
+    y_valid = data["Y_valid"]
     dim = x_train.shape[1]
     network = Input(shape=(dim,))
     input = network
 
     for i in range(n_couches):
-        network = Dense(noeuds[i], activation=activation,W_regularizer=regularizers.l1l2(reg_l1,reg_l2))(network)
+        network = Dense(
+            noeuds[i], activation=activation,
+            W_regularizer=regularizers.l1l2(reg_l1, reg_l2)
+        )(network)
 
-    network = Dense(10, activation="softmax",W_regularizer=regularizers.l1l2(reg_l1,reg_l2))(network)
+    network = Dense(
+        10, activation="softmax",
+        W_regularizer=regularizers.l1l2(reg_l1, reg_l2)
+    )(network)
 
     model = Model(input=input, output=network)
 
@@ -50,7 +55,8 @@ def train_model(activation, n_couches, noeuds, learning_rate, reg_l1, reg_l2,
                                decay=decay,
                                nesterov=nesterov)
 
-    model.compile(optimizer=opt, loss="categorical_crossentropy", metrics=['accuracy'])
+    model.compile(optimizer=opt, loss="categorical_crossentropy",
+                  metrics=['accuracy'])
 
     model.fit(x_train, y_train,
               nb_epoch=20,
