@@ -3,9 +3,15 @@ import numpy as np
 class sample(object):
     def __init__(self):
         # new : [n_couches, c1, c2, c3, learning_rate, reg_l1, reg_l2, moment, decay, nesterov, activation]
-        self.values = np.array([[0, 1, 2, 3], range(10, 500, 10), range(10, 500, 10), range(10, 500, 10),
-                                [0.001, 0.002, 0.004, 0.008, 0.016, 0.03, 0.06, 0.012, 0.025, 0.05, 0.1, 0.2, 0.4, 0.8], [0.0], [0.0], [0.], [0.],
-                                [0], [1, 2]])
+        self.values = np.array([[0, 1, 2, 3], #n_couches
+                                range(10, 500, 10), range(10, 500, 10), range(10, 500, 10), #couches
+                                [0.001, 0.002, 0.004, 0.008, 0.016, 0.03, 0.06, 0.012, 0.025, 0.05, 0.1, 0.2, 0.4, 0.8], #learning rate
+                                [0.000001,0.00001,0.0001,0.001,0.01,0.1], #reg_l1
+                                [0.000001,0.00001,0.0001,0.001,0.01,0.1], #reg_l2
+                                [0.001, 0.002, 0.004, 0.008, 0.016, 0.03, 0.06, 0.012, 0.025, 0.05, 0.1, 0.2, 0.4, 0.8], #moment
+                                [.0,0.001, 0.002, 0.004, 0.008, 0.016, 0.03, 0.06, 0.012, 0.025, 0.05, 0.1, 0.2, 0.4, 0.8], #decay
+                                [0,1], #nesterov
+                                [0, 1, 2]])
         self.max = np.zeros(self.values.shape[0], dtype='int')
         for i in range(self.values.shape[0]):
             self.max[i] = len(self.values[i])
@@ -41,3 +47,6 @@ class sample(object):
         for n in range(len(s[1])):
             t[1 + n] = s[1][n] / 500.
         return t
+
+    def __str__(self):
+        return str(self.c)
