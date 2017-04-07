@@ -40,12 +40,12 @@ def train_model(activation, n_couches, noeuds, learning_rate, reg_l1, reg_l2,
     for i in range(n_couches):
         network = Dense(
             noeuds[i], activation=activation,
-            W_regularizer=regularizers.l1l2(reg_l1, reg_l2)
+            W_regularizer=regularizers.l1_l2(reg_l1, reg_l2)
         )(network)
 
     network = Dense(
         10, activation="softmax",
-        W_regularizer=regularizers.l1l2(reg_l1, reg_l2)
+        W_regularizer=regularizers.l1_l2(reg_l1, reg_l2)
     )(network)
 
     model = Model(input=input, output=network)
