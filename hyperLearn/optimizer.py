@@ -14,8 +14,12 @@ import hyperLearn.sample as sp
 
 def learn_RSM(x, y):
     # x_train, x_test, y_train, y_test = mds.train_test_split(x, y, test_size=0.10, random_state=0)
-    x_train, x_valid, y_train, y_valid = mds.train_test_split(x, y, test_size=0.10, random_state=0)
+    # x_train, x_valid, y_train, y_valid = mds.train_test_split(x, y, test_size=0.10, random_state=0)
     # print('RSMdata',x_train,y_train)
+    x_train = x
+    y_train = y
+    x_valid = x
+    y_valid = y
 
     dim = x.shape[1]
     input = Input(shape=(dim,))
@@ -58,12 +62,12 @@ def learn_hyperparam():
     (acc, RSM_model) = learn_RSM(x, y)
 
     hist_acc = []
-    alpha = 0.0001
+    alpha = 0.001
     max_acc = max(y)
     best_model = []
-    best_conf = []
     k = 0
     s = sp.sample()
+    best_conf = s
     while k < 200:
         print('n° test', k)
         # print('shape x',x.shape)
@@ -89,8 +93,8 @@ def learn_hyperparam():
             r = np.random.uniform(0, 1)
             if r < alpha:
                 res = train_MINST.train_model_s(s.get_MNIST(), data)
-                if res[0] < max_acc:
-                    acc = res[0]
+                if res[0] > max_acc:
+                    max_acc = res[0]
                     best_model = res[1]
                     best_conf = s
                 (x, y) = add_train((x, y), (s.get_RSM(), res[0]))
@@ -98,13 +102,17 @@ def learn_hyperparam():
                 hist_acc.append(acc)
                 print('RSM_acc', acc)
                 k = k + 1
-    plt.plot(range(acc.shape[0]), acc)
+    print('bestconf',best_conf)
+    print('error of RSM',max_acc)
+    plt.plot(range(len(hist_acc)), hist_acc)
     plt.show()
-    return best_conf, best_model, acc
+    return best_conf, best_model, max_acc
 
 
 if __name__ == '__main__':
-    learn_hyperparam()
+    res = learn_hyperparam()
+    print('bestconf',res[0])
+    print('error of RSM',res[3])
     # data = load_data.load_data()
     # s=[0, np.array([], dtype='float64'), 0.14289055892459254, 0.0, 0.0, 0.64011881862533493, 0.66598721505367042, 1, 1]
     # print(train_MINST.train_model_s(s, data)[0])
