@@ -22,7 +22,7 @@ def train_model_s(s, data):
 def train_model(data, n_epoch=100, batch_size=200, **kwargs):
     hparams = {
         "activation":    "relu",
-        "n_couches":    1,
+        "n_couches":     1,
         "noeuds":        [50],
         "learning_rate": .01,
         "reg_l1":        .001,
