@@ -2,6 +2,7 @@ from keras.layers import Input, Dense
 import keras.optimizers
 from keras.models import Model
 from keras import regularizers
+import logging
 
 
 def train_model_s(s, data):
@@ -19,7 +20,7 @@ def train_model_s(s, data):
     )
 
 
-def train_model(data, n_epoch=100, batch_size=200, **kwargs):
+def train_model(data, **kwargs):
     hparams = {
         "activation":    "relu",
         "n_couches":     1,
@@ -29,7 +30,9 @@ def train_model(data, n_epoch=100, batch_size=200, **kwargs):
         "reg_l2":        .001,
         "moment":        .01,
         "decay":         1e-6,
-        "nesterov":      True
+        "nesterov":      True,
+        "n_epoch":       100,
+        "batch_size":    200
     }
     hparams.update(kwargs)
 
@@ -69,11 +72,15 @@ def train_model(data, n_epoch=100, batch_size=200, **kwargs):
                   metrics=['accuracy'])
 
     model.fit(x_train, y_train,
-              nb_epoch=n_epoch,
-              batch_size=batch_size,
+              nb_epoch=hparams["n_epoch"],
+              batch_size=hparams["batch_size"],
               verbose=0,
               shuffle=True,
               validation_data=(x_valid, y_valid))
 
     loss = model.evaluate(x_valid, y_valid, verbose=0)
+
+    logger = logging.getLogger(__name__)
+    logger.info("Acc={}, Params={}".format(loss[1], hparams))
+
     return (loss[1], model)
