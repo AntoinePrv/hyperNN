@@ -11,7 +11,7 @@ import argparse
 def run(**kwargs):
     data = load_data_bis()
     _, acc = train_model(data, **kwargs)
-
+    return acc
 
 if __name__ == "__main__":
     # create logger
@@ -49,6 +49,5 @@ if __name__ == "__main__":
                 params[key] = neurons
                 params["n_couches"] = len(neurons)
 
-    acc, _ = run(**params)
-
+    acc = run(**params)
     print(acc)
