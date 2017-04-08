@@ -1,4 +1,16 @@
 import logging
+import os
+import errno
+
+
+def create_file(filename):
+    if not os.path.exists(os.path.dirname(filename)):
+        try:
+            os.makedirs(os.path.dirname(filename))
+            open(filename, 'a').close()
+        except OSError as exc:  # Guard against race condition
+            if exc.errno != errno.EEXIST:
+                raise
 
 
 def custom_logger(name, file):
@@ -6,7 +18,7 @@ def custom_logger(name, file):
     logger = logging.getLogger(name)
     logger.setLevel(logging.DEBUG)
     # create console handler and set level to debug
-    open(file, 'a').close()
+    create_file(file)
     ch = logging.FileHandler(file)
     ch.setLevel(logging.DEBUG)
     # create formatter

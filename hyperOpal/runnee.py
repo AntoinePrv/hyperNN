@@ -10,8 +10,9 @@ import argparse
 
 def run(**kwargs):
     data = load_data_bis()
-    _, acc = train_model(data, **kwargs)
+    acc, _ = train_model(data, **kwargs)
     return acc
+
 
 if __name__ == "__main__":
     # create logger
