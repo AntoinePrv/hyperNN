@@ -49,4 +49,6 @@ if __name__ == "__main__":
                 params[key] = neurons
                 params["n_couches"] = len(neurons)
 
-    run(**params)
+    acc, _ = run(**params)
+
+    print(acc)
