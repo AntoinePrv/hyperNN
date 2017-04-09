@@ -26,26 +26,26 @@ NN.set_executable_command("python hyperOpal/runner.py")
 #                           "False": ["True"]})
 # NN.add_param(nv)
 
-lr = Parameter(kind="real", default=.01, bound=(0., 1.),
-               name="lr", description="Learning rate")
+lr = Parameter(kind="real", default=.001, bound=(0., 1.),
+               name="learning_rate", description="Learning rate")
 NN.add_param(lr)
-l1 = Parameter(kind="real", default=.01, bound=(0., 1.),
-               name="l1", description="L1 regularization")
+l1 = Parameter(kind="real", default=.0001, bound=(0., 1.),
+               name="reg_l1", description="L1 regularization")
 NN.add_param(l1)
-l2 = Parameter(kind="real", default=.01, bound=(0., 1.),
-               name="l2", description="L2 regularization")
+l2 = Parameter(kind="real", default=.0001, bound=(0., 1.),
+               name="reg_l2", description="L2 regularization")
 NN.add_param(l2)
 m = Parameter(kind="real", default=.01, bound=(0., 1.),
-              name="m", description="Momentum")
+              name="moment", description="Momentum")
 NN.add_param(m)
-d = Parameter(kind="real", default=.0001, bound=(0., .1),
-              name="d", description="Decay")
+d = Parameter(kind="real", default=1e-6, bound=(0., .1),
+              name="decay", description="Decay")
 NN.add_param(d)
 
 n1 = Parameter(kind="integer", default=200, bound=(0, 500),
                name="n1", description="Number of neurons in first layer")
 NN.add_param(n1)
-n2 = Parameter(kind="integer", default=0, bound=(0, 500),
+n2 = Parameter(kind="integer", default=200, bound=(0, 500),
                name="n2", description="Number of neurons in second layer")
 NN.add_param(n2)
 n3 = Parameter(kind="integer", default=0, bound=(0, 500),
