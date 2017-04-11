@@ -1,6 +1,5 @@
 from opal.core.io import read_params_from_file, write_measures_to_file
 import sys
-from logger import custom_logger
 import json
 import subprocess
 
@@ -12,7 +11,7 @@ def run(params, problem):
     with open("hyperOpal/config.json") as f:
         js = json.load(f)
     command = "ssh -i {} {}@{} ".format(js["key"], js["user"], js["host"])
-    command += "\"python 2>/dev/null ~/hyperNN/hyperOpal/runnee.py "
+    command += "\"python 2>/dev/null ~/hyperNN/problem/runnee.py "
 
     command += "--noeuds {} {} {} ".format(
         params["n1"], params["n2"], params["n3"])
@@ -36,14 +35,11 @@ if __name__ == '__main__':
     problem = sys.argv[2]      # Problem name
     output_file = sys.argv[3]  # Name of the file to output results to
 
-    logger = custom_logger(__name__, "hyperOpal/log/runner.log")
     # Get the paramters as dictionnary from the file
     params = read_params_from_file(param_file)
-    logger.info(params)
 
     # Run the black box and get the relevant measures
     measures = run(params, problem)
-    logger.info(measures)
 
     # Write the measures back to the output file
     write_measures_to_file(output_file, measures)

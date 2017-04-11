@@ -4,8 +4,8 @@ os.chdir("/".join(sys.argv[0].split("/")[:-2]))
 sys.path.append(".")
 
 import argparse
-from problem.load_data import load_data_bis
-from problem.train_MINST import train_model
+from load_data import load_data_bis
+from train_MINST import train_model
 from logger import custom_logger
 
 
