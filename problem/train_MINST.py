@@ -3,6 +3,7 @@ import keras.optimizers
 from keras.models import Model
 from keras import regularizers
 import logging
+import json
 
 
 def train_model_s(s, data):
@@ -81,6 +82,6 @@ def train_model(data, **kwargs):
     loss = model.evaluate(x_valid, y_valid, verbose=0)
 
     logger = logging.getLogger(__name__)
-    logger.info("Acc={}, Params={}".format(loss[1], hparams))
+    logger.info(json.dumps(dict(hparams, **{"Accuracy": loss[1]})))
 
     return (loss[1], model)
