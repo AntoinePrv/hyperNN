@@ -14,4 +14,4 @@ if __name__ == "__main__":
         try:
             Popen(args=command, shell=True)
         except Exception as e:
-            raise
+            print("Error on {}: {}".format(ip, e))
