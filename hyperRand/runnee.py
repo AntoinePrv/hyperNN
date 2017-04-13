@@ -9,6 +9,7 @@ import numpy as np
 from problem.load_data import load_data_bis
 from problem.train_MINST import train_model
 from problem.logger import custom_logger
+from uuid import uuid4
 
 
 def run(**kwargs):
@@ -19,7 +20,10 @@ def run(**kwargs):
 
 if __name__ == "__main__":
     # create logger
-    logger = custom_logger("problem.train_MINST", "hyperRand/log/runnee.log")
+
+    logger = custom_logger(
+        "problem.train_MINST",
+        "hyperRand/log/runnee{}.log".format(str(uuid4())))
 
     data = load_data_bis()
     n = 1 if len(sys.argv) <= 1 else int(sys.argv[1])
