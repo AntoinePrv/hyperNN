@@ -50,4 +50,6 @@ if __name__ == "__main__":
             "reg_l2":        reg_l2[i],
             "moment":        moment[i],
             "decay":         decay[i],
-            "nesterov":      bool(nesterov[i])})
+            "nesterov":      bool(nesterov[i]),
+            "n_epoch":       100,
+            "batch_size":    200})
