@@ -3,6 +3,7 @@ import keras.optimizers
 from keras.models import Model
 from keras import regularizers
 import logging
+import json
 
 
 def train_model_s(s, data):
@@ -48,7 +49,7 @@ def train_model(data, **kwargs):
         network = Dense(
             hparams["noeuds"][i],
             activation=hparams["activation"],
-            W_regularizer=regularizers.l1_l2(
+            kernel_regularizer=regularizers.l1_l2(
                 hparams["reg_l1"],
                 hparams["reg_l2"]
             )
@@ -56,12 +57,12 @@ def train_model(data, **kwargs):
 
     network = Dense(
         10, activation="softmax",
-        W_regularizer=regularizers.l1_l2(
+        kernel_regularizer=regularizers.l1_l2(
             hparams["reg_l1"],
             hparams["reg_l2"])
     )(network)
 
-    model = Model(input=input, output=network)
+    model = Model(inputs=input, outputs=network)
 
     opt = keras.optimizers.SGD(lr=hparams["learning_rate"],
                                momentum=hparams["moment"],
@@ -72,7 +73,7 @@ def train_model(data, **kwargs):
                   metrics=['accuracy'])
 
     model.fit(x_train, y_train,
-              nb_epoch=hparams["n_epoch"],
+              epochs=hparams["n_epoch"],
               batch_size=hparams["batch_size"],
               verbose=0,
               shuffle=True,
@@ -81,6 +82,6 @@ def train_model(data, **kwargs):
     loss = model.evaluate(x_valid, y_valid, verbose=0)
 
     logger = logging.getLogger(__name__)
-    logger.info("Acc={}, Params={}".format(loss[1], hparams))
+    logger.info(json.dumps(dict(hparams, **{"Accuracy": loss[1]})))
 
     return (loss[1], model)

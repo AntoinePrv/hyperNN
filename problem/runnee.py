@@ -1,6 +1,8 @@
 import sys
 import os
-os.chdir("/".join(sys.argv[0].split("/")[:-2]))
+dir = "/".join(sys.argv[0].split("/")[:-2])
+if dir != "":
+    os.chdir(dir)
 sys.path.append(".")
 
 import argparse
@@ -17,7 +19,7 @@ def run(**kwargs):
 
 if __name__ == "__main__":
     # create logger
-    logger = custom_logger("problem.train_MINST", "hyperOpal/log/runnee.log")
+    logger = custom_logger("train_MINST", "log/runnee.log")
 
     # gets arguments
     parser = argparse.ArgumentParser(description="Runs MNIST")
