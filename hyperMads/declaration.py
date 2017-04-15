@@ -7,7 +7,7 @@ from opal.core.measure import Measure
 NN = Algorithm(name="hyperNN", description="Hyperparameter optimisation")
 
 # Register executable for NN.
-NN.set_executable_command("python hyperOpal/runner.py")
+NN.set_executable_command("python hyperMads/runner.py")
 
 # Register parameter file used by black-box solver to communicate with NN.
 # NN.set_parameter_file("fd.param")

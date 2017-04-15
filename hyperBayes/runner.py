@@ -3,7 +3,7 @@ import subprocess
 
 
 def run(params):
-    with open("../hyperOpal/config.json") as f:
+    with open("../hyperMads/config.json") as f:
         js = json.load(f)
     command = "ssh -i {} {}@{} ".format(js["key"], js["user"], js["host"])
     command += "\"python 2>/dev/null ~/hyperNN/problem/runnee.py "

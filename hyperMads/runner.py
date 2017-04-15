@@ -8,7 +8,7 @@ def run(params, problem):
     """
     Runs the black box with the given parameters.
     """
-    with open("hyperOpal/config.json") as f:
+    with open("hyperMads/config.json") as f:
         js = json.load(f)
     command = "ssh -i {} {}@{} ".format(js["key"], js["user"], js["host"])
     command += "\"python 2>/dev/null ~/hyperNN/problem/runnee.py "
