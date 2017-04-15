@@ -1,0 +1,50 @@
+{
+	"language"        : "PYTHON",
+	"main-file"       : "runner.py",
+	"experiment-name" : "hyperBayes05",
+	"likelihood"      : "NOISELESS",
+	"variables" : {
+		"noeuds1": {
+			"type" : "INT",
+			"size" : 1,
+			"min"  : 100,
+			"max"  : 500
+		},
+		"noeuds2": {
+			"type" : "INT",
+			"size" : 1,
+			"min"  : 100,
+			"max"  : 500
+		},
+		"learning_rate" : {
+			"type" : "FLOAT",
+			"size" : 1,
+			"min"  : 1e-4,
+			"max"  : 5e-1
+		},
+		"reg_l1" : {
+			"type" : "FLOAT",
+			"size" : 1,
+			"min"  : 1e-6,
+			"max"  : 1e-1
+		},
+		"reg_l2" : {
+			"type" : "FLOAT",
+			"size" : 1,
+			"min"  : 1e-4,
+			"max"  : 1e-1
+		},
+		"moment" : {
+			"type" : "FLOAT",
+			"size" : 1,
+			"min"  : 1e-4,
+			"max"  : 1e-1
+		},
+		"decay" : {
+			"type" : "FLOAT",
+			"size" : 1,
+			"min"  : 1e-4,
+			"max"  : 1e-1
+		}
+	}
+}
