@@ -12,9 +12,8 @@ from problem.logger import custom_logger
 from uuid import uuid4
 
 
-def run(**kwargs):
-    data = load_data_bis()
-    acc, _ = train_model(data, **kwargs)
+def run(data, params):
+    acc, _ = train_model(data, **params)
     return acc
 
 
@@ -30,8 +29,9 @@ if __name__ == "__main__":
 
     activation = np.array(["relu", "softmax", "tanh", "sigmoid"])
     activation = activation[np.random.randint(0, 4, n)]
-    n_couches = 2  # using only two layer to compare with hyperOpal
-    noeuds = np.random.poisson(200, n_couches*n).reshape((n, n_couches))
+    n_couches = np.random.randint(1, 4, n)
+    noeuds = np.random.poisson(200, n_couches.sum())
+    i_noeuds = 0
     learning_rate = np.exp(np.random.normal(-2, 3, n))
     reg_l1 = np.exp(np.random.normal(-2, 3, n))
     reg_l2 = np.exp(np.random.normal(-2, 3, n))
@@ -41,15 +41,16 @@ if __name__ == "__main__":
     nesterov = nesterov[np.random.randint(0, 2, n)]
 
     for i in xrange(n):
-        run(**{
+        run(data, {
             "activation":    activation[i],
-            "n_couches":     n_couches,
-            "noeuds":        noeuds[i].tolist(),
+            "n_couches":     n_couches[i],
+            "noeuds":        noeuds[i_noeuds: i_noeuds+n_couches[i]].tolist(),
             "learning_rate": learning_rate[i],
             "reg_l1":        reg_l1[i],
             "reg_l2":        reg_l2[i],
             "moment":        moment[i],
             "decay":         decay[i],
             "nesterov":      bool(nesterov[i]),
-            "n_epoch":       100,
-            "batch_size":    200})
+            "n_epoch":       1,
+            "batch_size":    2000})
+        i_noeuds += n_couches[i]
