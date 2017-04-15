@@ -51,6 +51,6 @@ if __name__ == "__main__":
             "moment":        moment[i],
             "decay":         decay[i],
             "nesterov":      bool(nesterov[i]),
-            "n_epoch":       1,
-            "batch_size":    2000})
+            "n_epoch":       100,
+            "batch_size":    200})
         i_noeuds += n_couches[i]
