@@ -1,4 +1,4 @@
-<img src="hyperNN.png", width=200>
+<img src="hyperNN.png" width="300">
 
 Academic project to optimize neural network hyper parameters.
 
