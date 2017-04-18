@@ -1,8 +1,15 @@
 import numpy as np
 
 class sample(object):
+    """
+    class to sample hyperparams
+    - randomly
+    - from the previous hyperparams
+    """
     def __init__(self):
         # new : [n_couches, c1, c2, c3, learning_rate, reg_l1, reg_l2, moment, decay, nesterov, activation]
+
+        # space definition
         self.values = np.array([[0, 1, 2, 3], #n_couches
                                 range(10, 500, 10), range(10, 500, 10), range(10, 500, 10), #couches
                                 [0.001, 0.002, 0.004, 0.008, 0.016, 0.03, 0.06, 0.012, 0.025, 0.05, 0.1, 0.2, 0.4, 0.8], #learning rate
@@ -15,11 +22,16 @@ class sample(object):
         self.max = np.zeros(self.values.shape[0], dtype='int')
         for i in range(self.values.shape[0]):
             self.max[i] = len(self.values[i])
+
+        # random sampling (initialisation)
         self.c = []
         for i in range(self.values.shape[0]):
             self.c.append(np.random.randint(self.max[i]))
 
     def get_MNIST(self):
+        """
+        :return: a readable array of hyperparams for train_MNIST
+        """
         res = []
         res.append(self.values[0][self.c[0]])
         n = []
@@ -31,6 +43,11 @@ class sample(object):
         return res
 
     def gaussian_samp(self):
+        """
+        gaussian sampling from the previous sample
+        creation of a new object (not in place)
+        :return: a sample
+        """
         s = sample()
         rand = np.random.normal(np.zeros(self.values.shape[0]), 0.5)
         for p in range(rand.shape[0]):
@@ -38,6 +55,10 @@ class sample(object):
         return s
 
     def get_RSM(self):
+        """
+        get a readable array for RSM training
+        :return: np array
+        """
         s=self.get_MNIST()
         # new : [n_couches, noeuds, learning_rate, reg_l1, reg_l2, moment, decay, nesterov, activation]
         # train : [n_couches, c1, c2, c3, learning_rate, reg_l1, reg_l2, moment, decay, nesterov, a1, a2, a3]
