@@ -4,7 +4,7 @@ import numpy as np
 
 
 def accuracy(acc):
-    max_acc = [max(acc[:i+1]) for i in xrange(len(acc))]
+    max_acc = [max(acc[:i+1]) for i in range(len(acc))]
     plt.figure(figsize=(16, 4), dpi=100)
 
     plt.plot(acc, color="grey", linewidth=2.5, label="Accuracy")
