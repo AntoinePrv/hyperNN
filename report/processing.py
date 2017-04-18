@@ -5,7 +5,7 @@ import numpy as np
 def accuracy(filename):
     with open(filename, "r") as f:
         data = json.load(f)
-    accuracy = np.array(map(lambda j: j["Accuracy"], data))
+    accuracy = np.array(list(map(lambda j: j["Accuracy"], data)))
     return accuracy
 
 
